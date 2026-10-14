@@ -1,0 +1,10 @@
+Resultados de pruebas automatizadas Bon-Bonite
+Fecha: 2026-10-14T10:35:56-05:00
+Casos detectados: 1
+Casos ejecutados: 1
+Aprobados: 1
+Rechazados: 0
+Omitidos: 0
+
+Detalle por caso:
+[APROBADO] tests/modules/pqrs/test_pqrs.py::test_pqrs_form_is_submitted[chromium]
