@@ -3,6 +3,7 @@ import re
 from playwright.sync_api import expect
 
 from pages.catalog_page import CatalogPage
+from pages.product_page import ProductPage
 
 
 def test_shoes_category_opens_product(page, store_url):
@@ -15,6 +16,8 @@ def test_shoes_category_opens_product(page, store_url):
     product_url = catalog.open_first_product()
     expect(page).to_have_url(re.compile(r"/producto/"))
     expect(page.get_by_role("heading", level=1)).to_be_visible()
+    product = ProductPage(page, store_url)
+    product.choose_first_available_size()
     assert "/producto/" in product_url, (
         f"Se esperaba una URL de producto; se obtuvo {product_url!r}."
     )

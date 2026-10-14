@@ -21,14 +21,11 @@ class ProductPage(BasePage):
     def choose_first_available_size(self) -> str:
         """Espera la primera talla habilitada, la selecciona y la devuelve."""
         available_sizes = self.page.locator("button.variation-button:not([disabled])")
-        if available_sizes.count() == 0:
-            raise AssertionError("El producto no tiene tallas disponibles.")
-
         size_button = available_sizes.first
         expect(size_button).to_be_visible(timeout=12_000)
         expect(size_button).to_be_enabled(timeout=12_000)
         size = size_button.inner_text().strip()
-        size_button.click(force=True)
+        size_button.click()
         return size
 
     def buy_now(self) -> None:

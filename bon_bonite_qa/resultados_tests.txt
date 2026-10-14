@@ -1,10 +1,19 @@
 Resultados de pruebas automatizadas Bon-Bonite
-Fecha: 2026-10-14T10:35:56-05:00
-Casos detectados: 1
-Casos ejecutados: 1
-Aprobados: 1
-Rechazados: 0
+Fecha: 2026-10-14T12:06:19-05:00
+Casos detectados: 10
+Casos ejecutados: 10
+Aprobados: 8
+Rechazados: 2
 Omitidos: 0
 
 Detalle por caso:
-[APROBADO] tests/modules/pqrs/test_pqrs.py::test_pqrs_form_is_submitted[chromium]
+[APROBADO] tests/modules/accesorios/test_accesorios.py::test_accessories_category_opens_first_product[chromium]
+[APROBADO] tests/modules/account/test_account.py::test_customer_can_register_and_update_profile[chromium]
+[APROBADO] tests/modules/bolsos/test_bolsos.py::test_bags_category_opens_first_product[chromium]
+[APROBADO] tests/modules/checkout/test_checkout.py::test_customer_can_buy_from_shoes_and_place_order[chromium]
+[APROBADO] tests/modules/cinturones/test_cinturones.py::test_belts_category_opens_first_product[chromium]
+[APROBADO] tests/modules/gift/test_gift_voucher.py::test_gift_voucher_page_is_reachable[chromium]
+[APROBADO] tests/modules/mi_cuenta/test_mi_cuenta.py::test_customer_can_log_in[chromium]
+[APROBADO] tests/modules/outlet/test_outlet.py::test_outlet_category_opens_first_product[chromium]
+[RECHAZADO] tests/modules/pqrs/test_pqrs.py::test_pqrs_form_is_submitted[chromium] - E   playwright._impl._errors.TimeoutError: Locator.fill: Timeout 12000ms exceeded.
+[RECHAZADO] tests/modules/zapatos/test_zapatos.py::test_shoes_category_opens_product[chromium] - El sitio respondió HTTP 403 Forbidden al navegador automatizado.

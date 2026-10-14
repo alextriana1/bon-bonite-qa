@@ -1,6 +1,7 @@
+from datetime import date
 from pathlib import Path
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from pages.base_page import BasePage
 
@@ -43,9 +44,33 @@ class PQRSPage(BasePage):
         """Abre el formulario de PQRS."""
         self.open("/pqrs/")
 
+    def wait_for_form_ready(self):
+        """Espera a que los campos del formulario estén visibles y habilitados."""
+        fields = (
+            self.point_of_sale,
+            self.request_date,
+            self.customer_name,
+            self.address,
+            self.document_type,
+            self.document_number,
+            self.phone,
+            self.email,
+            self.request_type,
+            self.description,
+        )
+        for field in fields:
+            field.wait_for(state="visible")
+            expect(field).to_be_enabled(timeout=12_000)
+
+        self.attachment.wait_for(state="attached")
+        self.privacy_consent_label.wait_for(state="visible")
+        self.create_request_button.wait_for(state="visible")
+
     def fill_submission_request(self, attachment_path: Path):
         """Completa la solicitud de prueba, adjunta evidencia y acepta el aviso."""
+        self.wait_for_form_ready()
         self.point_of_sale.select_option(label="Bon-Bonite Sucre")
+        self.request_date.fill(date.today().strftime("%d/%m/%Y"))
         self.customer_name.fill("QA Automatizacion")
         self.address.fill("Direccion de prueba 123, Medellin")
         self.document_type.select_option(label="Cédula de Ciudadanía (CC)")
@@ -60,8 +85,9 @@ class PQRSPage(BasePage):
             "Favor no procesar; se envia para validar el formulario."
         )
         self.attachment.set_input_files(str(attachment_path))
-        self.privacy_consent_label.click(force=True)
+        self.privacy_consent_label.click()
 
     def submit_request(self):
         """Envía el formulario de PQRS."""
-        self.create_request_button.click(force=True)
+        expect(self.create_request_button).to_be_enabled(timeout=12_000)
+        self.create_request_button.click()

@@ -1,7 +1,18 @@
+import re
+import warnings
+from datetime import datetime
+from pathlib import Path
+
 import pytest
 from playwright.sync_api import Page
 
 from utils.config import DEFAULT_BASE_URL
+
+EVIDENCE_DIR = (
+    Path(__file__).resolve().parent
+    / "evidencias"
+    / datetime.now().strftime("%Y%m%d-%H%M%S-%f")
+)
 
 
 def pytest_addoption(parser):
@@ -36,6 +47,18 @@ def store_url(request):
 
 
 @pytest.fixture(autouse=True)
-def configure_page(page: Page):
+def configure_page(page: Page, request):
     page.set_default_timeout(12_000)
     page.set_viewport_size({"width": 1440, "height": 1000})
+    yield
+
+    case_name = re.sub(r"[^A-Za-z0-9_.-]+", "_", request.node.nodeid)
+    screenshot_path = EVIDENCE_DIR / f"{case_name}.png"
+    try:
+        EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
+        page.screenshot(path=str(screenshot_path), full_page=True)
+    except Exception as error:
+        warnings.warn(
+            f"No se pudo guardar la evidencia del caso {request.node.nodeid}: {error}",
+            RuntimeWarning,
+        )

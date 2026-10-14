@@ -1,3 +1,4 @@
+from datetime import date
 import re
 from pathlib import Path
 
@@ -20,7 +21,7 @@ def test_pqrs_form_is_submitted(page, store_url):
     pqrs.accept_cookies()
     pqrs.fill_submission_request(attachment_path)
 
-    expect(pqrs.request_date).not_to_have_value("")
+    expect(pqrs.request_date).to_have_value(date.today().strftime("%d/%m/%Y"))
     expect(pqrs.customer_name).to_have_value("QA Automatizacion")
     expect(pqrs.email).to_have_value("qa.pqrs@example.com")
     expect(page.get_by_text(attachment_path.name, exact=True)).to_be_visible()

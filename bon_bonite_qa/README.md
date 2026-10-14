@@ -48,6 +48,8 @@ python run_tests.py --browser-channel=chrome --run-mutating --bonbonite-url http
 
 Las pruebas que crean/actualizan una cuenta, agregan productos al carrito o envían el formulario PQRS se omiten por defecto; `--run-mutating` las habilita. El runner oculta la salida detallada de pytest y muestra únicamente los casos ejecutados y aprobados. Conserva un código de salida distinto de cero si hay fallos. Cada corrida escribe el resultado individual de los casos en `resultados_tests.txt`; el informe manual de validación está en [INFORME_PRUEBAS.md](INFORME_PRUEBAS.md).
 
+Al finalizar cada caso ejecutado se guarda una captura de página completa en `evidencias/`, dentro de una carpeta única por corrida. Esta carpeta queda fuera de `test-results/` para conservar las capturas anteriores; si no es posible tomar una, pytest muestra una advertencia sin alterar el resultado del caso.
+
 El registro genera una cédula numérica y correo únicos por ejecución. La compra puede generar una orden; el usuario de prueba queda creado en el ambiente.
 
 ## Estructura

@@ -13,6 +13,7 @@ venv/
 env/
 
 # Resultados generados
+evidencias/
 test-results/
 playwright-report/
 blob-report/
